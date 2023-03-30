@@ -1,0 +1,98 @@
+syntax = "proto3";
+
+package relation;
+import "common.proto";
+
+option go_package = "relation";
+
+service UserRpc {
+  rpc FollowAction(FollowActionReq)returns(FollowActionResp);
+  rpc FollowList(FollowListReq)returns(FollowListResp);
+  rpc FollowerList(FollowerListReq)returns(FollowerListResp);
+  rpc FriendList(FriendListReq) returns(FriendListResp);
+  rpc MessageAction(MessageActionReq) returns(MessageActionResp);
+  rpc MessageList(MessageListReq) returns(MessageListResp);
+}
+
+message FollowActionReq {
+  string user_id = 1;
+  string to_user_id = 2;
+  string action_type = 3;
+}
+
+message FollowActionResp {
+  string status_code = 1;
+  string status_msg = 2;
+}
+
+message FollowListReq {
+  string user_id = 1;
+  string to_user_id = 2;
+}
+
+message FollowListResp {
+  string status_code = 1;
+  string status_msg = 2;
+  repeated User user_list = 3;
+}
+
+message FollowerListReq {
+  string user_id = 1;
+  string to_user_id = 2;
+}
+
+message FollowerListResp {
+  string status_code = 1;
+  string status_msg = 2;
+  repeated User user_list = 3;
+}
+
+message FriendListReq {
+  int64 user_id = 1; // 用户id
+}
+
+message FriendListResp {
+  int32 status_code = 1; // 状态码，0-成功，其他值-失败
+  string status_msg = 2; // 返回状态描述
+  repeated FriendUser user_list = 3; // 用户列表
+}
+
+message FriendUser {
+  message User {
+    User user = 1;
+  }
+  string message = 2; // 和该好友的最新聊天消息
+  int64 msgType = 3; // message消息的类型，0 => 当前请求用户接收的消息， 1 => 当前请求用户发送的消息
+}
+
+message MessageListReq {
+  int64 user_id = 1; // 用户鉴权token
+  int64 to_user_id = 2; // 对方用户id
+  int64 pre_msg_time = 3;
+}
+
+message MessageListResp {
+  int32 status_code = 1; // 状态码，0-成功，其他值-失败
+  string status_msg = 2; // 返回状态描述
+  repeated Message message_list = 3; // 消息列表
+}
+
+message Message {
+  int64 id = 1; // 消息id
+  int64 to_user_id = 2; // 该消息接收者的id
+  int64 from_user_id =3; // 该消息发送者的id
+  string content = 4; // 消息内容
+  int64 create_time = 5; // 消息创建时间
+}
+
+message MessageActionReq {
+  int64 user_id = 1; // 用户鉴权token
+  int64 to_user_id = 2; // 对方用户id
+  int32 action_type = 3; // 1-发送消息
+  string content = 4; // 消息内容
+}
+
+message MessageActionResp {
+  int32 status_code = 1; // 状态码，0-成功，其他值-失败
+  string status_msg = 2; // 返回状态描述
+}

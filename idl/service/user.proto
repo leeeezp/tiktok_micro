@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package user;
+
+import "common.proto";
+
+option go_package = "user";
+
+service UserRpc {
+  rpc Register(RegisterReq)returns(RegisterResp);
+  rpc Login(LoginReq)returns(LoginResp);
+  rpc GetUser(GetUserReq)returns(GetUserResp);
+
+}
+
+message RegisterReq {
+  string username = 1;
+  string Password = 2;
+}
+
+message RegisterResp {
+  string status_code = 1;
+  string status_msg = 2;
+  uint64 user_id = 3;
+}
+
+message LoginReq{
+  string username = 1;
+  string password = 2;
+}
+
+message LoginResp {
+  string status_code = 1;
+  string status_msg = 2;
+  uint64 user_id = 3;
+}
+
+message GetUserReq {
+  string user_id = 1;
+  string query_id = 2;
+}
+
+
+
+message GetUserResp {
+  string status_code = 1;
+  string status_msg = 2;
+  User User = 3;
+}
+

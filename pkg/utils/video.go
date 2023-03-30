@@ -24,7 +24,7 @@ import (
 	"github.com/cloudwego/hertz/pkg/app"
 	"github.com/cloudwego/hertz/pkg/common/hlog"
 
-	"github.com/cloudwego/hertz-examples/bizdemo/tiktok_demo/biz/mw/minio"
+	"tiktok_micro/biz/mw/minio"
 )
 
 // NewFileName Splicing user_id and time to make unique filename

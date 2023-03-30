@@ -1,9 +1,5 @@
-init_api:
-	sh hz_gen.sh init
+kitex_gen:
+	kitex -I idl/service -module tiktok_micro idl/service/user.proto     # execute in the project root directory
+	&& kitex -I idl/service -module tiktok_micro idl/service/user.proto
+	&& kitex -I idl/service -module tiktok_micro idl/service/user.proto
 
-update_api:
-	sh hz_gen.sh
-
-# Since use *multipart.FileHeader in the model of publish \
-# and use the anonymous structure common.User is embedded in FriendUser in the model of relation,
-# the modification needs to manually modify the model of publish and relation
